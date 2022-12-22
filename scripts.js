@@ -1,4 +1,4 @@
-const gameboard = (function(){
+const gameBoard = (function(){
   let board = [[null,null, null],[null,null, null],[null,null, null]];
 
   function showPiece(x, y) {
@@ -9,24 +9,37 @@ const gameboard = (function(){
     board[x][y] = piece; 
   }
 
+  function resetBoard(){
+    for (i = 0; i < 3; i++) {
+     for (j = 0; j < 3; j++) {
+       placePiece(null, i, j);
+     }
+    }
+  }
+  function printBoard() {
+    board.forEach((arr) => console.log(arr))
+  }
+
   return {
-    get,
-    set
+    showPiece,
+    placePiece,
+    resetBoard,
+    printBoard
   }
 })();
 
-
-const game = (function(){
+const player = (name, piece) => {
+  function choose(coord){
+    gameBoard.placePiece(this.piece, coord[0], coord[1])
+  } 
   
-  function resetBoard(){
+  return {name, piece, choose}
+}
 
+const playGame = (function(){
+  
+
+  return {
   }
 
-  function (){
-
-  }
-
-  function resetBoard(){
-
-  }
 })();
