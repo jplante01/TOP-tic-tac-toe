@@ -49,48 +49,78 @@ table {
 
 /* END RESET */
 
+:root {
+  --black: #282828;
+  --gray: #3f3f46;
+  --white: #f4f4f5;
+  --red: #dc2626;
+  --yellow: #fcd34d;
+  --green: #4dfc948a;
+}
+
+* { 
+  background-color: var(--black);
+  color: var(--white);
+}
+
 .container {
   display: grid;
   height: 100vh;
-  grid-template-columns: 1fr 3fr;
   grid-template-rows: 1fr 5fr;
 }
 
 .header {
-  grid-column: 1 / 3;
-  background-color: #00d084;
   display: flex;
   align-items: center;
   justify-content: center;
   font: 6vw "roboto", sans-serif;
   padding: auto;
-  border-bottom: 2px solid black;
-}
-
-.sidebar {
-  background-color: #9B51e0;
-  border-right: 2px solid black;
+  border-bottom: 2px solid var(--white);
 }
 
 .main{
-  background-color: #fcb900;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.sidebar {
+  width: 25%;
+  height 100%;
+}
+
 .gameboard {
-  width: 50%;
+  height: 60%;
   aspect-ratio: 1 / 1; 
   margin: auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-  border: 3px solid black;
+  border: 3px solid var(--white);
+  border-radius: 5px;
+}
+#new {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  height: 40px;
+  width: 90px;
+  background-color: var(--green);
+  color: var(--black);
+}
+.spot {
+  font: 8vh "roboto", sans-serif;
+  border-top: 1px dashed var(--white);
+  border-right: 1px dashed var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.spot {
-  font: 8vw "roboto", sans-serif;
-  text-align: center;
-  margin: auto;
+.gameboard .spot:nth-child(-n+3) {
+  border-top: none;
+}
+
+.gameboard .spot:nth-child(3n) {
+  border-right: none;
 }
