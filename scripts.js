@@ -44,7 +44,7 @@ const playGame = (function(){
 
 })();
 
-const game = (function(){
-
+const game = (function(player1, player1Mark, player2, player2Mark){
+  
 
 })();
