@@ -159,7 +159,30 @@ table {
 }
 
 .form-container {
-
- height: 70%;
- width: 50%;
+  height: 70%;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.form-row {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-row label {
+  margin-right: 20px;
+}
+
+
+.form-row label {
+  margin-right: 20px;
+}
+
+.form-row input {
+  margin-top: 10px;
+}
+
