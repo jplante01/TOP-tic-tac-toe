@@ -1,10 +1,12 @@
 const spots = document.querySelectorAll(".spot");
 const popUp = document.querySelector('.pop-up'); 
+
 spots.forEach((spot, idx) =>{
   spot.addEventListener('click', () => {
     game.takeTurn(idx);
   });
 });
+
 document.getElementById('new').addEventListener('click',()=>{
   popUp.className = 'pop-up'
 });
@@ -16,6 +18,18 @@ document.getElementById('new-game-form').addEventListener('submit',(e) =>{
   let playerTwoPiece = document.getElementById('player-two-piece').value;
 
   game.newGame(playerOneName, playerOnePiece, playerTwoName, playerTwoPiece);
+
+  let pOneName = document.getElementById('p1-name-display');
+  let pOnePiece = document.getElementById('p1-char-display');
+  let pTwoName = document.getElementById('p2-name-display');
+  let pTwoPiece = document.getElementById('p2-char-display');
+
+
+  pOneName.textContent = playerOneName;
+  pOnePiece.textContent = playerOnePiece;
+  pTwoName.textContent = playerTwoName;
+  pTwoPiece.textContent = playerTwoPiece;
+  
   popUp.className = 'pop-up hide'
   e.preventDefault();
 });
