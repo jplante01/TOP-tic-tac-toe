@@ -1,9 +1,12 @@
 const spots = document.querySelectorAll(".spot");
-
+const popUp = document.querySelector('.pop-up'); 
 spots.forEach((spot, idx) =>{
   spot.addEventListener('click', () => {
     game.takeTurn(idx);
   });
+});
+document.getElementById('new').addEventListener('click',()=>{
+  popUp.className = 'pop-up'
 });
 
 document.getElementById('new-game-form').addEventListener('submit',(e) =>{
@@ -12,7 +15,8 @@ document.getElementById('new-game-form').addEventListener('submit',(e) =>{
   let playerTwoName = document.getElementById('player-two-name').value;
   let playerTwoPiece = document.getElementById('player-two-piece').value;
 
-  console.log([playerOneName, playerOnePiece, playerTwoName, playerTwoPiece]);
+  game.newGame(playerOneName, playerOnePiece, playerTwoName, playerTwoPiece);
+  popUp.className = 'pop-up hide'
   e.preventDefault();
 });
 
@@ -138,5 +142,5 @@ const game = (function(){
 })();
 
 /***************************************************TESTING******************************/
-game.newGame('Jeff', 'X', 'Tom', 'O');
+// game.newGame('Jeff', 'X', 'Tom', 'O');
 /***************************************************TESTING******************************/
