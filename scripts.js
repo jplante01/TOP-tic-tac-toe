@@ -1,45 +1,51 @@
 const spots = document.querySelectorAll(".spot");
 const popUp = document.querySelector('.pop-up'); 
 
+//Event listeners on gameBoard to fire the takeTurn function
 spots.forEach((spot, idx) =>{
   spot.addEventListener('click', () => {
     game.takeTurn(idx);
   });
 });
 
+//Event listener to open new game form upon button click
 document.getElementById('new').addEventListener('click',()=>{
   popUp.className = 'pop-up'
 });
 
+//Event listener for new game form submission
 document.getElementById('new-game-form').addEventListener('submit',(e) =>{
+  //Collect inputs
   let playerOneName = document.getElementById('player-one-name').value;
   let playerOnePiece = document.getElementById('player-one-piece').value;
   let playerTwoName = document.getElementById('player-two-name').value;
   let playerTwoPiece = document.getElementById('player-two-piece').value;
-
+  
+  //Initiate new game
   game.newGame(playerOneName, playerOnePiece, playerTwoName, playerTwoPiece);
-
+  
+  //Get player info elements
   let pOneName = document.getElementById('p1-name-display');
   let pOnePiece = document.getElementById('p1-char-display');
   let pTwoName = document.getElementById('p2-name-display');
   let pTwoPiece = document.getElementById('p2-char-display');
 
-
+  //Update interface with players and pieces
   pOneName.textContent = playerOneName;
   pOnePiece.textContent = playerOnePiece;
   pTwoName.textContent = playerTwoName;
   pTwoPiece.textContent = playerTwoPiece;
   
+  //Hide form pop-up
   popUp.className = 'pop-up hide'
+
+
   e.preventDefault();
 });
 
+// Game board module
 const gameBoard = (function(){
   let board = ["", "", "", "", "", "", "", "", ""];
-
-  function showPiece(n) {
-    return board[n];
-  }
 
   function placePiece(piece, n) {
     board[n] = piece; 
@@ -47,12 +53,8 @@ const gameBoard = (function(){
 
   function resetBoard(){
     for (i = 0; i < board.length; i++) {
-       placePiece("", i);
+       board[i] = "";
     }
-  }
-
-  function printBoard() {
-    console.log(board)
   }
 
   function renderBoard () {
@@ -65,9 +67,9 @@ const gameBoard = (function(){
     let victoryConditions = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
 
     for (i = 0; i < victoryConditions.length; i++) {
-      let first = showPiece(victoryConditions[i][0]);
-      let second = showPiece(victoryConditions[i][1]);
-      let third = showPiece(victoryConditions[i][2]);
+      let first = board[victoryConditions[i][0]];
+      let second = board[victoryConditions[i][1]];
+      let third = board[victoryConditions[i][2]];
       
       if (first !== "" && first === second && first === third) {
         return true;
@@ -79,23 +81,12 @@ const gameBoard = (function(){
   return {
     checkVictory,
     renderBoard,
-    showPiece,
     placePiece,
-    resetBoard,
-    printBoard
+    resetBoard
   }
 })();
 
-/***************************************************TESTING******************************/
-// gameBoard.printBoard()
-// console.log(gameBoard.checkVictory())
-// gameBoard.placePiece("X",2)
-// gameBoard.placePiece("X",4)
-// gameBoard.placePiece("X",6)
-// gameBoard.printBoard()
-// console.log(gameBoard.checkVictory())
-/***************************************************TESTING******************************/
-
+//Game play module
 const game = (function(){
 
   let player1 = "",
@@ -149,12 +140,6 @@ const game = (function(){
 
   return {
     newGame,
-    turn, /*********TESTING----REMOVE*****/
-    togglePlayer,  /*********TESTING----REMOVE*****/
     takeTurn
   }
 })();
-
-/***************************************************TESTING******************************/
-// game.newGame('Jeff', 'X', 'Tom', 'O');
-/***************************************************TESTING******************************/
