@@ -1,5 +1,21 @@
 const spots = document.querySelectorAll(".spot");
 
+spots.forEach((spot, idx) =>{
+  spot.addEventListener('click', () => {
+    game.takeTurn(idx);
+  });
+});
+
+document.getElementById('new-game-form').addEventListener('submit',(e) =>{
+  let playerOneName = document.getElementById('player-one-name').value;
+  let playerOnePiece = document.getElementById('player-one-piece').value;
+  let playerTwoName = document.getElementById('player-two-name').value;
+  let playerTwoPiece = document.getElementById('player-two-piece').value;
+
+  console.log([playerOneName, playerOnePiece, playerTwoName, playerTwoPiece]);
+  e.preventDefault();
+});
+
 const gameBoard = (function(){
   let board = ["", "", "", "", "", "", "", "", ""];
 
@@ -62,28 +78,18 @@ const gameBoard = (function(){
 // console.log(gameBoard.checkVictory())
 /***************************************************TESTING******************************/
 
-const player = (name, piece) => {
-  function choose(coord){
-    gameBoard.placePiece(this.piece, coord[0], coord[1])
-  } 
-  
-  return {name, piece, choose}
-}
-
-const playGame = (function(){
-  
-
-  return {
-  }
-
-})();
-
 const game = (function(){
 
   let player1 = "",
       player1Mark = "",
       player2 = "",
-      player2Mark = "";
+      player2Mark = "",
+      activeGame = false;
+
+  let turn = {
+    'currentPlayer' : "",
+    'currentMark' : "",
+  }
 
   function newGame(p1, p1Mark, p2, p2Mark){
     player1 = p1;
@@ -94,13 +100,9 @@ const game = (function(){
     turn.currentMark = p1Mark;
 
     gameBoard.resetBoard();
+    activeGame = true;
   }
 
-  turn = {
-    'currentPlayer' : player1,
-    'currentMark' : player1Mark,
-    'gameComplete' : false
-  }
  
   function togglePlayer() {
     if(turn.currentPlayer === player1) {
@@ -113,14 +115,15 @@ const game = (function(){
     }
 
   function takeTurn(n) {
-  
+    if (activeGame === false) return;
+
     gameBoard.placePiece(turn.currentMark, n);
   
     gameBoard.renderBoard()
 
     if (gameBoard.checkVictory()){
       console.log('YOU WIN!');
-      turn.gameComplete = true;
+      activeGame = false;
     }
     
     togglePlayer();
