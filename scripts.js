@@ -3,8 +3,8 @@ const popUp = document.querySelector('.pop-up');
 
 //Event listeners on gameBoard to fire the takeTurn function
 spots.forEach((spot, idx) =>{
-  spot.addEventListener('click', () => {
-    game.takeTurn(idx);
+  spot.addEventListener('click', (e) => {
+    if (!e.target.textContent) game.takeTurn(idx);
   });
 });
 
