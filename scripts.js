@@ -1,12 +1,22 @@
-const spots = document.querySelectorAll(".spot");
-const popUp = document.querySelector('.pop-up'); 
+const spots = document.querySelectorAll(".spot"),
+      popUp = document.querySelector('.pop-up'), 
+      formInputP1Name = document.getElementById('player-one-name'),
+      formInputP1Mark = document.getElementById('player-one-mark'),
+      formInputP2Name = document.getElementById('player-two-name'),
+      formInputP2Mark = document.getElementById('player-two-mark'),
+      p1Display = document.getElementById('p1-display'),
+      p2Display = document.getElementById('p2-display');
 
-let player1 = {},
-    player2 = {},
+const playerFactory = function(name, mark){
+  return {name, mark};
+};
+
+let player1 = playerFactory("", ""),
+    player2 = playerFactory("", ""),
     currentPlayer = player1;
 
 //Event listeners on gameBoard to fire the takeTurn function
-spots.forEach((spot, idx) =>{
+spots.forEach((spot, idx) => {
   spot.addEventListener('click', (e) => {
     if (!e.target.textContent) game.takeTurn(idx);
   });
@@ -19,35 +29,22 @@ document.getElementById('new').addEventListener('click',()=>{
 
 //Event listener for new game form submission
 document.getElementById('new-game-form').addEventListener('submit',(e) => {
-  //Collect inputs
-  let playerOneName = document.getElementById('player-one-name').value;
-  let playerOnePiece = document.getElementById('player-one-piece').value;
-  let playerTwoName = document.getElementById('player-two-name').value;
-  let playerTwoPiece = document.getElementById('player-two-piece').value;
   
   //Initiate new game
-  game.newGame(playerOneName, playerOnePiece, playerTwoName, playerTwoPiece);
+  game.newGame(formInputP1Name.value, formInputP1Mark.value, formInputP2Name.value, formInputP2Mark.value);
   
-  //Get player info elements
-  let pOneName = document.getElementById('p1-name-display');
-  let pOnePiece = document.getElementById('p1-char-display');
-  let pTwoName = document.getElementById('p2-name-display');
-  let pTwoPiece = document.getElementById('p2-char-display');
 
   //Update interface with players and pieces
-  pOneName.textContent = playerOneName;
-  pOnePiece.textContent = playerOnePiece;
-  pTwoName.textContent = playerTwoName;
-  pTwoPiece.textContent = playerTwoPiece;
-  
+  p1Display.firstElementChild.textContent = player1.name;
+  p1Display.lastElementChild.textContent  = player1.mark;
+  p2Display.firstElementChild.textContent  = player2.name;
+  p2Display.lastElementChild.textContent  = player2.mark;
+
   //Reset form
-  document.getElementById('player-one-name').value = "";
-  document.getElementById('player-one-piece').value = "";
-  document.getElementById('player-two-name').value = "";
-  document.getElementById('player-two-piece').value = "";
-  
-  // gameBoard.resetBoard();
-  // gameBoard.renderBoard();
+  formInputP1Name.value = "";
+  formInputP1Mark.value = "";
+  formInputP2Name.value = "";
+  formInputP2Mark.value = "";
 
   //Hide form pop-up
   popUp.className = 'pop-up hide'
@@ -99,21 +96,18 @@ const gameBoard = (function(){
   }
 })();
 
-const playerFactory = function(name, mark){
-  return {name, mark};
-};
-
 //Game play module
 const game = (function(){
 
   let activeGame = false;
-
+  
+  
   function newGame(p1, p1Mark, p2, p2Mark){
     player1.name = p1;
     player1.mark = p1Mark;
     player2.name = p2;
     player2.mark = p2Mark;
-   
+
     gameBoard.resetBoard();
     gameBoard.renderBoard();
     activeGame = true;
