@@ -1,6 +1,10 @@
 const spots = document.querySelectorAll(".spot");
 const popUp = document.querySelector('.pop-up'); 
 
+let player1 = {},
+    player2 = {},
+    currentPlayer = player1;
+
 //Event listeners on gameBoard to fire the takeTurn function
 spots.forEach((spot, idx) =>{
   spot.addEventListener('click', (e) => {
@@ -42,8 +46,8 @@ document.getElementById('new-game-form').addEventListener('submit',(e) => {
   document.getElementById('player-two-name').value = "";
   document.getElementById('player-two-piece').value = "";
   
-  gameBoard.resetBoard();
-  gameBoard.renderBoard();
+  // gameBoard.resetBoard();
+  // gameBoard.renderBoard();
 
   //Hide form pop-up
   popUp.className = 'pop-up hide'
@@ -95,47 +99,39 @@ const gameBoard = (function(){
   }
 })();
 
+const playerFactory = function(name, mark){
+  return {name, mark};
+};
+
 //Game play module
 const game = (function(){
 
-  let player1 = "",
-      player1Mark = "",
-      player2 = "",
-      player2Mark = "",
-      activeGame = false;
-
-  let turn = {
-    'currentPlayer' : "",
-    'currentMark' : "",
-  }
+  let activeGame = false;
 
   function newGame(p1, p1Mark, p2, p2Mark){
-    player1 = p1;
-    player1Mark = p1Mark;
-    player2 = p2;
-    player2Mark = p2Mark
-    turn.currentPlayer = p1;
-    turn.currentMark = p1Mark;
-
+    player1.name = p1;
+    player1.mark = p1Mark;
+    player2.name = p2;
+    player2.mark = p2Mark;
+   
     gameBoard.resetBoard();
+    gameBoard.renderBoard();
     activeGame = true;
   }
 
  
   function togglePlayer() {
-    if(turn.currentPlayer === player1) {
-       turn.currentPlayer = player2;
-       turn.currentMark = player2Mark;
+    if(currentPlayer === player1) {
+       currentPlayer = player2;
     } else {
-      turn.currentPlayer = player1;
-      turn.currentMark = player1Mark;
+      currentPlayer = player1;
       }
     }
 
   function takeTurn(n) {
     if (activeGame === false) return;
 
-    gameBoard.placePiece(turn.currentMark, n);
+    gameBoard.placePiece(currentPlayer.mark, n);
   
     gameBoard.renderBoard()
 

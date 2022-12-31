@@ -186,3 +186,9 @@ table {
   margin-top: 10px;
 }
 
+.your-turn {
+  transform: translate(0px, -20px);
+  text-shadow: -4px 4px 9px var(--white);
+  transition-delay: 1s;
+  transition: text-shadow 1s, transform 1s;
+}
