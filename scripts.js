@@ -14,7 +14,7 @@ document.getElementById('new').addEventListener('click',()=>{
 });
 
 //Event listener for new game form submission
-document.getElementById('new-game-form').addEventListener('submit',(e) =>{
+document.getElementById('new-game-form').addEventListener('submit',(e) => {
   //Collect inputs
   let playerOneName = document.getElementById('player-one-name').value;
   let playerOnePiece = document.getElementById('player-one-piece').value;
@@ -36,6 +36,15 @@ document.getElementById('new-game-form').addEventListener('submit',(e) =>{
   pTwoName.textContent = playerTwoName;
   pTwoPiece.textContent = playerTwoPiece;
   
+  //Reset form
+  document.getElementById('player-one-name').value = "";
+  document.getElementById('player-one-piece').value = "";
+  document.getElementById('player-two-name').value = "";
+  document.getElementById('player-two-piece').value = "";
+  
+  gameBoard.resetBoard();
+  gameBoard.renderBoard();
+
   //Hide form pop-up
   popUp.className = 'pop-up hide'
 
