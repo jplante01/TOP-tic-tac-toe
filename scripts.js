@@ -111,10 +111,14 @@ const game = (function(){
     gameBoard.resetBoard();
     gameBoard.renderBoard();
     activeGame = true;
+    p1Display.classList.toggle("your-turn");
   }
 
  
   function togglePlayer() {
+    p1Display.classList.toggle("your-turn");
+    p2Display.classList.toggle("your-turn");
+
     if(currentPlayer === player1) {
        currentPlayer = player2;
     } else {
@@ -132,9 +136,9 @@ const game = (function(){
     if (gameBoard.checkVictory()){
       console.log('YOU WIN!');
       activeGame = false;
+    } else {
+      togglePlayer();
     }
-    
-    togglePlayer();
   }
 
   return {
